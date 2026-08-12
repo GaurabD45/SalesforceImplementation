@@ -13,6 +13,7 @@ trigger AccountTrigger on Account (before insert, before update, after update) {
     if (Trigger.isAfter) {
         if (Trigger.isUpdate) {
             Trigger_3_Handler.conPhoneUpdateOnAccPhoneUpdate(Trigger.new, Trigger.oldMap);
+            Trigger_9_Handler.updateOppStatusOnAccUpdate(Trigger.newMap);
         }
     }
 }
