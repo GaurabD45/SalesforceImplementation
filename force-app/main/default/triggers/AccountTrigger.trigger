@@ -10,13 +10,14 @@ trigger AccountTrigger on Account (before insert, before update, before delete, 
         }
 
         if (Trigger.isDelete) {
-            Trigger_9_Handler.preventActiveAccDeletion(Trigger.old);
+            Trigger_10_Handler.preventActiveAccDeletion(Trigger.old);
         }
     }
     
     if (Trigger.isAfter) {
         if (Trigger.isUpdate) {
             Trigger_3_Handler.conPhoneUpdateOnAccPhoneUpdate(Trigger.new, Trigger.oldMap);
+            Trigger_9_Handler.updateOppStatusOnAccUpdate(Trigger.newMap);
         }
     }
 }
