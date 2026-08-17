@@ -1,4 +1,4 @@
-trigger AccountTrigger on Account (before insert, before update, after update) {
+trigger AccountTrigger on Account (before insert, before update, before delete, after update) {
     
     if (Trigger.isBefore) {
         if (Trigger.isInsert) {
@@ -7,6 +7,10 @@ trigger AccountTrigger on Account (before insert, before update, after update) {
 
         if (Trigger.isUpdate) {
             Trigger_6_Handler.preventAccountRecordDuplicationByName(Trigger.New, Trigger.oldMap);
+        }
+
+        if (Trigger.isDelete) {
+            Trigger_10_Handler.preventActiveAccDeletion(Trigger.old);
         }
     }
     

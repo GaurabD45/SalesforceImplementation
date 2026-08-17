@@ -1,5 +1,5 @@
 public with sharing class Trigger_9_Handler {
-    public static void updateOppStatusOnAccUpdate(Map<Id, Account> newAccMap) {
+   public static void updateOppStatusOnAccUpdate(Map<Id, Account> newAccMap) {
         Set<Id> accIds = new Set<Id> ();
         List<Opportunity> oppList = new List<Opportunity>();
 
