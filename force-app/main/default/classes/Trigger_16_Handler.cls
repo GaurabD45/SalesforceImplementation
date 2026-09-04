@@ -6,7 +6,6 @@ public with sharing class Trigger_16_Handler {
         }
 
         Set<Id> accIds = new Set<Id>();
-        Map<Id, Opportunity> accountToOpportunityMap = new Map<Id, Opportunity>();
         List<Account> accList = new List<Account>();
         
         //collecting Account Ids
@@ -31,27 +30,17 @@ public with sharing class Trigger_16_Handler {
             }
         }
 
-        //fetching all Opportunities and sorting them in decreasing order as per their amount
-        //and populating out account opp map
-        for (Opportunity opp : [
-            SELECT Id, Name, AccountId, Amount FROM Opportunity
-            WHERE AccountId IN :accIds
-            ORDER BY Amount DESC NULLS LAST
+        for (Account acc : [
+            SELECT Id, Description, (SELECT Id, Name, Amount FROM Opportunities
+            ORDER BY Amount DESC NULLS LAST LIMIT 1) FROM Account
+            WHERE Id IN :accIds
         ]) {
-            if (!accountToOpportunityMap.containsKey(opp.AccountId)) {
-                accountToOpportunityMap.put(opp.AccountId, opp);
+
+            if (!acc.Opportunities.isEmpty()) {
+                acc.Description = acc.Opportunities[0].Name + ' has the highest Amount.';
             }
-        }
-
-        //updating Account Description
-        for (Id accId : accIds) {
-            Account acc = new Account(Id = accId);
-
-            if (accountToOpportunityMap.containsKey(accId)) {
-                Opportunity opp = accountToOpportunityMap.get(accId);
-                acc.Description = opp.Name + ' has the highest amount.';
-            } else {
-                acc.Description = 'No opportunity exits on this account.';
+            else {
+                acc.Description = 'No Opportunities exist on this account.';
             }
 
             accList.add(acc);
