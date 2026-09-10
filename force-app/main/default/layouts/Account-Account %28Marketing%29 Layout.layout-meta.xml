@@ -33,6 +33,10 @@
                 <behavior>Edit</behavior>
                 <field>Close_Opportunities__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_Opportunity_Products__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
