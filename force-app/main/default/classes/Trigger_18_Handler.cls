@@ -11,16 +11,17 @@ public with sharing class Trigger_18_Handler {
         for (Account acc : accList) {
             Account oldAcc = oldMap.get(acc.Id);
 
-            if (acc.Close_Opportunities__c && oldAcc.Close_Opportunities != true) {
+            if (acc.Close_Opportunities__c && !oldAcc.Close_Opportunities__c) {
                 accIds.add(acc.Id);
             }
         }
 
         if (!accIds.isEmpty()) {
             for (Opportunity oppRec : [
-                SELECT Id, Probability, StageName, AccountId FROM Opportunity
+                SELECT Id, StageName FROM Opportunity
                 WHERE AccountId IN :accIds 
                 AND Probability > 70
+                AND IsClosed = false
             ]) {
                 oppRec.StageName = 'Closed Won';
                 oppList.add(oppRec);
@@ -31,4 +32,4 @@ public with sharing class Trigger_18_Handler {
             }
         }
     }
-}
+}   
