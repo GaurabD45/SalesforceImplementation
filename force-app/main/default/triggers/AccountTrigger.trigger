@@ -19,6 +19,7 @@ trigger AccountTrigger on Account (before insert, before update, before delete, 
             Trigger_3_Handler.conPhoneUpdateOnAccPhoneUpdate(Trigger.new, Trigger.oldMap);
             Trigger_9_Handler.updateOppStatusOnAccUpdate(Trigger.newMap);
             Trigger_14_Handler.sendEmailToContactsOnAccountTypeUpdat(Trigger.new,Trigger.oldMap);
+            Trigger_18_Handler.closeOppWithProbabilityGreaterThan70Percent(Trigger.new, Trigger.oldMap);
         }
     }
 }
