@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Close_Opportunities__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Closes all opportunities with probability greater than 70%.</description>
+    <inlineHelpText>Closes all opportunities with probability greater than 70%.</inlineHelpText>
+    <label>Close Opportunities</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

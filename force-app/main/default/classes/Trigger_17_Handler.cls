@@ -25,21 +25,23 @@ public with sharing class Trigger_17_Handler {
             ]) {
                 accountToPriConMap.put(con.AccountId, con.Id);
             }
-        }
 
-        //validation on insertion and updation
-        for (Contact con : conList) {
-            if (con.Primary_Contact__c == true && con.AccountId != null) {
-                if ((accountToPriConMap.containsKey(con.AccountId)) && (oldMap == null || (accountToPriConMap.get(con.AccountId) != con.Id))) {
-                    con.addError('Primary contact on the related account already exists.');
-                } 
-                else if(newlyAddedPriConAccIds.contains(con.AccountId)){
-                    con.addError('Cannot add more than one primary contact on an Account.');
-                }
-                else {
-                    newlyAddedPriConAccIds.add(con.AccountId);
+            //validation on insertion and updation
+            for (Contact con : conList) {
+                if (con.Primary_Contact__c == true && con.AccountId != null) {
+                    if ((accountToPriConMap.containsKey(con.AccountId)) && (oldMap == null || (accountToPriConMap.get(con.AccountId) != con.Id))) {
+                        con.addError('Primary contact on the related account already exists.');
+                    } 
+                    else if(newlyAddedPriConAccIds.contains(con.AccountId)){
+                        con.addError('Cannot add more than one primary contact on an Account.');
+                    }
+                    else {
+                        newlyAddedPriConAccIds.add(con.AccountId);
+                    }
                 }
             }
+
         }
+
     }
 }
