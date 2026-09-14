@@ -2,6 +2,7 @@ trigger OpportunityLineItemTrigger on OpportunityLineItem (after insert, after d
     if (Trigger.isAfter) {
         if (Trigger.isInsert) {
             Trigger_20_Handler.recalculateTotalOpportunityLineItemsOnAccount(Trigger.new, null, null);
+            Trigger_21_Handler.createAssetForEachOpportunityProductInserted(Trigger.new);
         }
 
         if (Trigger.isUndelete) {
