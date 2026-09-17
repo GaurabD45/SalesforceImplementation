@@ -1,6 +1,6 @@
 public with sharing class Trigger_23_Handler {
-    public static void createOrUpdateTaskOnOpportunityStageChange(Map<Id, Opportunity> newMap, Map<Id, Opportunity> oldMap) {
-        if (newMap == null || newMap.isEmpty()) {
+    public static void createOrUpdateTaskOnOpportunityStageChange(List<Opportunity> oppList, Map<Id, Opportunity> oldMap) {
+        if (oppList == null || oppList.isEmpty()) {
             return;
         }
 
@@ -8,13 +8,11 @@ public with sharing class Trigger_23_Handler {
         Map<Id, Task> opportunityToTaskMap = new Map<Id, Task>();
         List<Task> newTasks = new List<Task>();
 
-        for (Id oppId : newMap.keySet()) {
-            Opportunity newRec, oldRec;
-            newRec = newMap.get(oppId);
-            oldRec = oldMap.get(oppId);
+        for (Opportunity oppRec : oppList) {
+            Opportunity oldRec = oldMap.get(oppId);
 
-            if (newRec.StageName != oldRec.StageName) {
-                oppIds.add(oppId);
+            if (oppRec.StageName != oldRec.StageName) {
+                oppIds.add(oppRec.Id);
             }
         }
 
@@ -35,21 +33,26 @@ public with sharing class Trigger_23_Handler {
             opportunityToTaskMap.put(tsk.WhatId, tsk);
         }
 
-        for (Id oppId : oppIds) {
-            Opportunity opp = newMap.get(oppId);
+        for (Opportunity oppRec : oppList) {
+            if (!oppIds.contains(oppRec.Id)) {
+                continue;
+            }
+
             Task tsk;
 
-            if (opportunityToTaskMap.containsKey(oppId)) {
-                tsk = opportunityToTaskMap.get(oppId);
-                tsk.Description = opp.StageName;
+            if (opportunityToTaskMap.containsKey(oppRec.Id)) {
+                tsk = opportunityToTaskMap.get(oppRec.Id);
+                tsk.Description = oppRec.StageName;
             }
             else {
                 tsk = new Task();
                 tsk.Status = 'New';
-                tsk.WhatId = oppId;
-                tsk.Description = opp.StageName;
+                tsk.WhatId = oppRec.Id;
+                tsk.Description = oppRec.StageName;
                 tsk.Priority = 'Normal';
                 tsk.ActivityDate = Date.today().addDays(7);
+                tsk.OwnerId = UserInfo.getUserId();
+                tsk.Subject = 'Follow Up';
             }
 
             newTasks.add(tsk);
@@ -58,6 +61,5 @@ public with sharing class Trigger_23_Handler {
         if (!newTasks.isEmpty()) {
             upsert newTasks;
         }
-
     }
 }
