@@ -7,12 +7,12 @@ public with sharing class Trigger_4_Handler {
             for (Contact con : conList) {
                 Contact oldCon = oldConMap.get(con.Id);
 
-                if (oldCon != null && oldCon.Descripton != con.Description) {
+                if (oldCon != null && oldCon.Description != con.Description) {
                     accountIdToDescriptionMap.put(con.AccountId, con.Description);
                 }
             }
 
-            if (!accountIdToDescriptionMap.isEmptyy()) {
+            if (!accountIdToDescriptionMap.isEmpty()) {
                 Set<Id> accIds = accountIdToDescriptionMap.keySet();
 
                 for (Account acc :[SELECT Id, Description FROM Account WHERE Id IN :accIds]) {
