@@ -21,13 +21,13 @@ public with sharing class Trigger_22_Handler {
         ]);
 
         productMap = new Map<Id, Product2>([
-            SELECT Id, Family__c
+            SELECT Id, Family
             FROM Product2
             WHERE Id IN :productIds
         ]);
 
         for (OpportunityLineItem oli : oliList) {
-            if (oppMap.get(oli.OpportunityId).Product_Family__c != productMap.get(oli.Product2Id).Family__c) {
+            if (oppMap.get(oli.OpportunityId).Product_Family__c != productMap.get(oli.Product2Id).Family) {
                 oli.addError('Opportunity and Opportunity Product cannot have different families.');
             }
         }
