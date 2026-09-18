@@ -9,7 +9,7 @@ public with sharing class Trigger_23_Handler {
         List<Task> newTasks = new List<Task>();
 
         for (Opportunity oppRec : oppList) {
-            Opportunity oldRec = oldMap.get(oppId);
+            Opportunity oldRec = oldMap.get(oppRec.Id);
 
             if (oppRec.StageName != oldRec.StageName) {
                 oppIds.add(oppRec.Id);
