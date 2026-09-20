@@ -29,12 +29,12 @@ public with sharing class Trigger_25_Handler {
         }
 
         for (OpportunityLineItem oli : [
-            SELECT Id, Description, Opportunity.AccountId accountId
+            SELECT Id, Description, Opportunity.AccountId
             FROM OpportunityLineItem 
             WHERE Opportunity.AccountId IN :accIds
             ORDER BY LastModifiedDate DESC NULLS LAST
         ]) {
-            Id accId = oli.accountId;
+            Id accId = oli.Opportunity.AccountId;
 
             if (accToOpportunityLineItemDescriptionMap.containsKey(accId)) {
                 continue;
