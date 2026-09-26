@@ -61,6 +61,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Trigger_28_Handler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Trigger_29_Handler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>Trigger_3_Handler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -114,6 +122,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Working_Cases__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Do_not_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
