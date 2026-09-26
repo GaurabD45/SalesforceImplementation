@@ -2,7 +2,7 @@ public with sharing class Trigger_29_Handler {
     public static void createFollowUpTaskOnLeadConversion(List<Lead> leadList, Map<Id, Lead> oldMap) {
         if (leadList == null || leadList.isEmpty()) return;
 
-        Set<Id> convertedLeadIds = new Set<Id>();
+        List<Lead> convertedLeads = new List<Lead>();
         Set<Id> accIds = new Set<Id>();
         Set<Id> contactIds = new Set<Id>();
         Set<Id> opportunityIds = new Set<Id>();
@@ -12,7 +12,7 @@ public with sharing class Trigger_29_Handler {
             Lead oldLead = oldMap != null ? oldMap.get(leadRec.Id) : null;
 
             if ((leadRec.IsConverted == true) && (oldMap == null || leadRec.IsConverted != oldLead.IsConverted)) {
-                convertedLeadIds.add(leadRec.Id);
+                convertedLeads.add(leadRec);
                 accIds.add(leadRec.ConvertedAccountId);
                 contactIds.add(leadRec.ConvertedContactId);
 
@@ -38,8 +38,7 @@ public with sharing class Trigger_29_Handler {
             WHERE Id IN :opportunityIds
         ]);
 
-        for (Lead rec : leadList) {
-            if (!convertedLeadIds.contains(rec.Id)) continue;
+        for (Lead rec : convertedLeads) {
 
             Account acc = accMap.get(rec.ConvertedAccountId);
             Contact con = conMap.get(rec.ConvertedContactId);
@@ -61,7 +60,7 @@ public with sharing class Trigger_29_Handler {
     
             Task newTask = new Task();
             newTask.Subject = 'Follow Up!';
-            newTask.Status = 'New';
+            newTask.Status = 'Not Started';
             newTask.Priority = 'Normal';
             newTask.WhatId = acc.Id;
             newTask.WhoId = con.Id;
