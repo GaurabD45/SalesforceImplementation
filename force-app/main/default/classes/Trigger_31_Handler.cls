@@ -14,11 +14,7 @@ public with sharing class Trigger_31_Handler {
 
             Case oldCase = oldMap.get(caseRec.Id);//update scenario
 
-            if (oldCase.Status != caseRec.Status && (oldCase.IsClosed || caseRec.IsClosed) && caseRec.AccountId != null) {
-                accIds.add(caseRec.AccountId);
-            }
-
-            if (caseRec.AccountId != oldCase.AccountId && (oldCase.IsClosed || caseRec.IsClosed)) {
+            if ((caseRec.AccountId != oldCase.AccountId || oldCase.Status != caseRec.Status) && (oldCase.IsClosed || caseRec.IsClosed)) {
                 if (caseRec.AccountId != null) accIds.add(caseRec.AccountId);
                 if (oldCase.AccountId != null) accIds.add(oldCase.AccountId);
             }
