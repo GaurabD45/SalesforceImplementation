@@ -23,7 +23,7 @@ public with sharing class Trigger_33_Handler {
     }
 
     public static void validateContactTypeField(List<Contact> conList, Map<Id, Contact> oldMap) {
-        if (conList.isEmpty() || conList == null || oldMap == null || oldMap.isEmpty()) return;
+        if (conList == null || conList.isEmpty() || oldMap == null || oldMap.isEmpty()) return;
 
         Set<Id> accIds = new Set<Id>();
 
