@@ -24,6 +24,11 @@
                 <default>false</default>
                 <label>Customer</label>
             </value>
+            <value>
+                <fullName>Non Profit</fullName>
+                <default>false</default>
+                <label>Non Profit</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
