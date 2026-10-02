@@ -7,20 +7,20 @@ public with sharing class Trigger_35_Handler {
         Map<Id, Contact> accToPrimaryContactMap = new Map<Id, Contact>();
         List<Event> eventList = new List<Event>();
 
-        for (Case case : caseList) {
+        for (Case caseRec : caseList) {
             if (oldCaseMap == null) {
-                if (case.AccountId != null) {
-                    accIds.add(case.AccountId);
-                    filteredCases.add(case);
+                if (caseRec.AccountId != null) {
+                    accIds.add(caseRec.AccountId);
+                    filteredCases.add(caseRec);
                 }
                 continue;
             }
 
-            Case oldCase = oldCaseMap.get(case.Id);
+            Case oldCase = oldCaseMap.get(caseRec.Id);
 
-            if (case.AccountId != oldCase.AccountId && case.AccountId != null) {
-                accIds.add(case.AccountId);
-                filteredCases.add(case);
+            if (caseRec.AccountId != oldCase.AccountId && caseRec.AccountId != null) {
+                accIds.add(caseRec.AccountId);
+                filteredCases.add(caseRec);
             }
         }
 
@@ -34,17 +34,17 @@ public with sharing class Trigger_35_Handler {
 
         if (accToPrimaryContactMap.isEmpty()) return;
 
-        for (Case case : filteredCases) {
-            Contact priCon = accToPrimaryContactMap.get(case.AccountId);
+        for (Case caseRec : filteredCases) {
+            Contact priCon = accToPrimaryContactMap.get(caseRec.AccountId);
 
             if (priCon == null) continue;
 
-            case.ContactId = priCon.Id;
+            caseRec.ContactId = priCon.Id;
 
             Event evnt = new Event();
             evnt.WhoId = priCon.Id;
-            evnt.WhatId = case.Id;
-            evnt.Subject = case.Subject;
+            evnt.WhatId = caseRec.Id;
+            evnt.Subject = caseRec.Subject;
             evnt.StartDateTime = Datetime.now().addHours(12);
             evnt.EndDateTime = evnt.StartDateTime.addDays(3);
 

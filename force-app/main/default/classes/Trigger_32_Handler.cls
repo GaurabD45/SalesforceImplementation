@@ -6,9 +6,9 @@ public with sharing class Trigger_32_Handler {
         Set<Id> accIds = new Set<Id>();
         Set<Id> conIds = new Set<Id>();
         Set<Id> oppIds = new Set<Id>();
-        Set<Account> accList = new Set<Account>();
-        Set<Contact> conList = new Set<Contact>();
-        Set<Opportunity> oppList = new Set<Opportunity>();
+        List<Account> accList = new List<Account>();
+        List<Contact> conList = new List<Contact>();
+        List<Opportunity> oppList = new List<Opportunity>();
 
         for (Lead rec : leadList) {
             if (oldMap == null) {
@@ -24,8 +24,8 @@ public with sharing class Trigger_32_Handler {
 
                 if (rec.IsConverted && !oldLead.IsConverted) {
                     convertedLeads.add(rec);
-                    accIds.add(rec.CovertedAccountId);
-                    conIds.add(rec.CovertedContactId);
+                    accIds.add(rec.ConvertedAccountId);
+                    conIds.add(rec.ConvertedContactId);
 
                     if (rec.ConvertedOpportunityId != null) oppIds.add(rec.ConvertedOpportunityId);
                 }
