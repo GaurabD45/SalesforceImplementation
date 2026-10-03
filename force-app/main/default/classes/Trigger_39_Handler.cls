@@ -45,7 +45,7 @@ public with sharing class Trigger_39_Handler {
 
             Task tsk = new Task();
             tsk.WhoId = conId;
-            tsk.WhatId = case.Id;
+            tsk.WhatId = caseRec.Id;
             tsk.Subject = 'Follow Up';
             tsk.Status = 'Not Started';
             tsk.Priority = 'High';
