@@ -3,6 +3,7 @@ public with sharing class Trigger_42_Handler {
         if (accList == null || accList.isEmpty() || oldMap == null || oldMap.isEmpty()) return;
 
         Set<Id> accIds = new Set<Id>();
+        Set<Id> accWithActiveContacts = new Set<Id>();
 
         for (Account acc : accList) {
             Account oldAcc = oldMap.get(acc.Id);
@@ -19,6 +20,12 @@ public with sharing class Trigger_42_Handler {
             FROM Account WHERE Id IN :accIds
         ]) {
             if (!acc.Contacts.isEmpty()) {
+                accWithActiveContacts.add(acc.Id);
+            }
+        }
+
+        for (Account acc : accList) {
+            if (accWithActiveContacts.contains(acc.Id)) {
                 acc.addError('Cannot deactivate an account with an active Contact.');
             }
         }
