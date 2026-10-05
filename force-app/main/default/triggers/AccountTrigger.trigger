@@ -7,6 +7,7 @@ trigger AccountTrigger on Account (before insert, before update, before delete, 
 
         if (Trigger.isUpdate) {
             Trigger_6_Handler.preventAccountRecordDuplicationByName(Trigger.New, Trigger.oldMap);
+            Trigger_42_Handler.preventAccountDeactivation(Trigger.New, Trigger.oldMap);
         }
 
         if (Trigger.isDelete) {
