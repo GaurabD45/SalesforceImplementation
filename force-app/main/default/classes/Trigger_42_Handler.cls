@@ -18,7 +18,7 @@ public with sharing class Trigger_42_Handler {
             SELECT Id, (SELECT Id FROM Contacts WHERE IsActive__c = true LIMIT 1)
             FROM Account WHERE Id IN :accIds
         ]) {
-            if (acc.Contacts.isEmpty()) {
+            if (!acc.Contacts.isEmpty()) {
                 acc.addError('Cannot deactivate an account with an active Contact.');
             }
         }
