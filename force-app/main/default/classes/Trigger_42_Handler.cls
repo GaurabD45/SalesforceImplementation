@@ -15,7 +15,7 @@ public with sharing class Trigger_42_Handler {
         if (accIds.isEmpty()) return;
 
         for (Account acc : [
-            SELECT Id, (SELECT Id, IsActive FROM Contacts WHERE IsActive = true LIMIT 1)
+            SELECT Id, (SELECT Id FROM Contacts WHERE IsActive__c = true LIMIT 1)
             FROM Account WHERE Id IN :accIds
         ]) {
             if (acc.Contacts.isEmpty()) {
