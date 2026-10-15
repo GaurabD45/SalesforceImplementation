@@ -30,7 +30,7 @@ public with sharing class Trigger_54_Handler {
         suppliedEmailList.removeAll(emailToContactMap.keySet());
 
         for (String email : suppliedEmailList) {
-            Account acc = emailToAccountMap.get(email);
+            Account acc = accMap.get(emailToAccountMap.get(email));
 
             Contact con = new Contact();
             con.Email = email;
